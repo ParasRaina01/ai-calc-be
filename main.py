@@ -5,7 +5,9 @@ from slowapi import Limiter
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 import uvicorn
+from dotenv import load_dotenv
 import os
+load_dotenv()
 from apps.calculator.route import router as calculator_router
 from constants import SERVER_URL, PORT, ENV
 
@@ -58,6 +60,5 @@ async def calculator_root(request: Request):
 app.include_router(calculator_router, prefix="/calculate", tags=["calculate"])
 
 if __name__ == "__main__":
-    load_dotenv()
     port = int(os.getenv("PORT", 8000))
     uvicorn.run("main:app", host=SERVER_URL, port=port, reload=True)
